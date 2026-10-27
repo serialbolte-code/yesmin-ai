@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YESMIN AI — Futuristic Personal AI Assistant (Android Studio Project)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Orbitron:wght@500;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        jarvis: {
+                            bg: '#050711',
+                            card: '#0B1021',
+                            border: '#1E2942',
+                            cyan: '#00F0FF',
+                            purple: '#A855F7',
+                            violet: '#7C3AED',
+                            pink: '#EC4899',
+                            dark: '#03050C'
+                        }
+                    },
+                    fontFamily: {
+                        orbitron: ['Orbitron', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #03050C;
+            color: #E2E8F0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+        /* Custom Glowing Scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050711;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1E2942;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00F0FF;
+        }
+        .neon-glow-cyan {
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.35);
+        }
+        .neon-glow-violet {
+            box-shadow: 0 0 25px rgba(124, 58, 237, 0.4);
+        }
+        .text-glow-cyan {
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+        }
+        .text-glow-violet {
+            text-shadow: 0 0 10px rgba(168, 85, 247, 0.6);
+        }
+        .glass-panel {
+            background: rgba(11, 16, 33, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 240, 255, 0.15);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Top Navigation Header -->
+    <header class="border-b border-jarvis-border bg-jarvis-bg/90 backdrop-blur-md sticky top-0 z-50 px-4 py-3">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-jarvis-violet via-jarvis-cyan to-jarvis-purple flex items-center justify-center neon-glow-cyan">
+                    <i class="fa-solid fa-microchip text-black text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="font-orbitron font-bold text-lg text-transparent bg-clip-text bg-gradient-to-r from-jarvis-cyan via-white to-jarvis-purple text-glow-cyan">
+                        YESMIN AI <span class="text-xs text-jarvis-cyan border border-jarvis-cyan/40 px-2 py-0.5 rounded-full ml-2">v1.0.0</span>
+                    </h1>
+                    <p class="text-xs text-slate-400">Futuristic Personal AI Assistant — Android Studio Workspace & Visualizer</p>
+                </div>
+            </div>
+
+            <!-- Tab Switcher -->
+            <div class="flex items-center space-x-1 bg-jarvis-dark p-1 rounded-xl border border-jarvis-border text-xs sm:text-sm">
+                <button onclick="switchTab('simulator')" id="tab-simulator" class="tab-btn active px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2 bg-gradient-to-r from-jarvis-cyan/20 to-jarvis-violet/20 text-jarvis-cyan border border-jarvis-cyan/40">
+                    <i class="fa-solid fa-mobile-screen"></i> <span>Live Phone Simulator</span>
+                </button>
+                <button onclick="switchTab('explorer')" id="tab-explorer" class="tab-btn px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2 text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-folder-tree"></i> <span>Android Project Code</span>
+                </button>
+                <button onclick="switchTab('architecture')" id="tab-architecture" class="tab-btn px-4 py-2 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2 text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-network-wired"></i> <span>Architecture</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 flex flex-col">
+
+        <!-- TAB 1: LIVE SIMULATION -->
+        <section id="view-simulator" class="tab-view flex-grow flex flex-col lg:flex-row gap-6">
+            
+            <!-- Phone Shell Frame -->
+            <div class="w-full lg:w-[420px] mx-auto flex-shrink-0 flex flex-col items-center">
+                <div class="relative w-full max-w-[380px] h-[740px] bg-black rounded-[45px] p-3 border-4 border-slate-800 shadow-2xl neon-glow-violet flex flex-col justify-between overflow-hidden">
+                    
+                    <!-- Phone Bezel Details -->
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-36 h-6 bg-slate-900 rounded-b-2xl z-40 flex items-center justify-center">
+                        <div class="w-12 h-1 bg-slate-700 rounded-full"></div>
+                        <div class="w-2.5 h-2.5 bg-slate-800 rounded-full ml-3 border border-slate-700"></div>
+                    </div>
+
+                    <!-- Android Screen Frame -->
+                    <div id="phone-screen" class="w-full h-full bg-jarvis-bg rounded-[36px] overflow-hidden flex flex-col relative pt-7 pb-2 px-3 border border-jarvis-border/40">
+                        
+                        <!-- Android Status Bar -->
+                        <div class="flex justify-between items-center text-[11px] text-slate-400 px-2 py-1 z-30 font-mono">
+                            <span>07:46</span>
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-wifi text-jarvis-cyan"></i>
+                                <i class="fa-solid fa-signal"></i>
+                                <span id="sim-battery-level" class="text-xs text-jarvis-cyan">88%</span>
+                                <i class="fa-solid fa-battery-three-quarters text-jarvis-cyan"></i>
+                            </div>
+                        </div>
+
+                        <!-- App Inner Tabs Header -->
+                        <div class="flex items-center justify-between border-b border-jarvis-border/60 py-2 px-1 mb-2">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-3 h-3 rounded-full bg-jarvis-cyan animate-pulse"></div>
+                                <span class="font-orbitron text-xs tracking-wider text-jarvis-cyan font-bold">YESMIN AI</span>
+                            </div>
+                            <div class="flex items-center space-x-2 text-xs">
+                                <button onclick="setPhoneAppTab('home')" id="p-tab-home" class="px-2 py-1 rounded bg-jarvis-violet/30 text-jarvis-cyan border border-jarvis-cyan/30">Assistant</button>
+                                <button onclick="setPhoneAppTab('coder')" id="p-tab-coder" class="px-2 py-1 rounded text-slate-400 hover:text-white">Coder</button>
+                                <button onclick="setPhoneAppTab('settings')" id="p-tab-settings" class="px-2 py-1 rounded text-slate-400 hover:text-white"><i class="fa-solid fa-gear"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- APP SCREEN 1: HOME (ASSISTANT & CORE ORB) -->
+                        <div id="sim-app-home" class="app-screen flex-grow flex flex-col justify-between overflow-hidden">
+                            <!-- Top Status Cards -->
+                            <div class="grid grid-cols-2 gap-2 text-[10px] font-mono mb-2">
+                                <div class="bg-jarvis-card p-2 rounded-xl border border-jarvis-border/60 flex items-center justify-between">
+                                    <span class="text-slate-400">ENGINE:</span>
+                                    <span class="text-jarvis-cyan font-bold" id="sim-model-name">Gemini 3 Flash</span>
+                                </div>
+                                <div class="bg-jarvis-card p-2 rounded-xl border border-jarvis-border/60 flex items-center justify-between">
+                                    <span class="text-slate-400">VOICE:</span>
+                                    <span class="text-jarvis-purple font-bold">Warm Girlfriend (HI/EN)</span>
+                                </div>
+                            </div>
+
+                            <!-- Central Core Orb & Waveform Canvas -->
+                            <div class="flex-grow flex flex-col items-center justify-center relative my-2">
+                                <canvas id="orbCanvas" width="280" height="230" class="z-10 cursor-pointer" onclick="toggleSimVoiceState()"></canvas>
+                                
+                                <div id="sim-state-badge" class="mt-2 px-3 py-1 rounded-full text-xs font-mono font-semibold bg-jarvis-cyan/10 border border-jarvis-cyan/40 text-jarvis-cyan flex items-center space-x-2">
+                                    <span class="w-2 h-2 rounded-full bg-jarvis-cyan animate-ping"></span>
+                                    <span id="sim-state-text">STATE: IDLE (Tap Orb)</span>
+                                </div>
+                            </div>
+
+                            <!-- Conversation Log Box -->
+                            <div id="sim-chat-box" class="h-44 overflow-y-auto bg-jarvis-dark/80 rounded-xl p-2.5 border border-jarvis-border/50 space-y-2.5 text-xs mb-3 font-sans">
+                                <div class="flex flex-col items-start max-w-[85%]">
+                                    <span class="text-[9px] text-jarvis-cyan font-mono mb-0.5">YESMIN</span>
+                                    <div class="bg-jarvis-card border border-jarvis-cyan/30 text-slate-200 p-2.5 rounded-2xl rounded-tl-none leading-relaxed">
+                                        Namaste! I am YESMIN, your futuristic AI companion. How can I assist you today?
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bottom Interaction Bar -->
+                            <div class="space-y-2">
+                                <div class="flex items-center space-x-2">
+                                    <input type="text" id="sim-user-input" placeholder="Ask YESMIN or command phone..." 
+                                           class="flex-grow bg-jarvis-card border border-jarvis-border text-xs rounded-xl px-3 py-2.5 text-white focus:outline-none focus:border-jarvis-cyan font-sans"
+                                           onkeypress="if(event.key === 'Enter') sendSimMessage()">
+                                    <button onclick="sendSimMessage()" class="w-9 h-9 bg-jarvis-cyan text-black rounded-xl font-bold flex items-center justify-center hover:bg-cyan-300 transition">
+                                        <i class="fa-solid fa-paper-plane text-xs"></i>
+                                    </button>
+                                    <button onclick="toggleSimMic()" id="sim-mic-btn" class="w-9 h-9 bg-jarvis-violet/30 border border-jarvis-violet text-jarvis-purple rounded-xl flex items-center justify-center hover:bg-jarvis-violet hover:text-white transition">
+                                        <i class="fa-solid fa-microphone text-xs"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- APP SCREEN 2: CODING ASSISTANT -->
+                        <div id="sim-app-coder" class="app-screen hidden flex-grow flex flex-col justify-between overflow-hidden text-xs">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-mono text-jarvis-cyan font-bold"><i class="fa-solid fa-code"></i> Workspace</span>
+                                <select id="coder-lang" class="bg-jarvis-card border border-jarvis-border text-[11px] rounded px-2 py-0.5 text-slate-300">
+                                    <option>Kotlin</option>
+                                    <option>Python</option>
+                                    <option>Java</option>
+                                    <option>JavaScript</option>
+                                    <option>SQL</option>
+                                </select>
+                            </div>
+                            <!-- Code Snippet Box -->
+                            <div class="flex-grow bg-jarvis-dark rounded-xl p-2.5 border border-jarvis-border font-mono text-[11px] text-slate-300 overflow-y-auto mb-2 space-y-2">
+                                <div class="text-slate-500">// YESMIN Generated Snippet</div>
+                                <pre id="sim-code-snippet" class="text-jarvis-cyan whitespace-pre-wrap">
+fun launchApp(context: Context, packageName: String) {
+    val intent = context.packageManager
+        .getLaunchIntentForPackage(packageName)
+    intent?.let { context.startActivity(it) }
+}</pre>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick="simulateCodeAction('debug')" class="bg-jarvis-card border border-jarvis-cyan/30 hover:border-jarvis-cyan text-jarvis-cyan py-1.5 rounded-lg font-mono text-[10px]"><i class="fa-solid fa-bug"></i> Debug Code</button>
+                                <button onclick="simulateCodeAction('explain')" class="bg-jarvis-card border border-jarvis-purple/30 hover:border-jarvis-purple text-jarvis-purple py-1.5 rounded-lg font-mono text-[10px]"><i class="fa-solid fa-lightbulb"></i> Explain Code</button>
+                            </div>
+                        </div>
+
+                        <!-- APP SCREEN 3: SETTINGS -->
+                        <div id="sim-app-settings" class="app-screen hidden flex-grow flex flex-col overflow-y-auto space-y-3 text-xs pr-1">
+                            <div class="font-orbitron text-jarvis-cyan font-bold text-sm border-b border-jarvis-border pb-1">AI & Device Config</div>
+                            
+                            <!-- API Key Input -->
+                            <div class="space-y-1">
+                                <label class="text-[10px] text-slate-400 font-mono">Gemini API Key</label>
+                                <div class="flex space-x-1">
+                                    <input type="password" value="AIzaSy_SAMPLE_GEMINI_KEY_789" class="bg-jarvis-card border border-jarvis-border rounded px-2 py-1 text-slate-200 text-xs flex-grow font-mono">
+                                    <button onclick="alert('API Key Validated Successfully!')" class="bg-jarvis-cyan text-black font-bold px-2 py-1 rounded text-[10px]">Test</button>
+                                </div>
+                            </div>
+
+                            <!-- Model Config -->
+                            <div class="space-y-1">
+                                <label class="text-[10px] text-slate-400 font-mono">AI Model</label>
+                                <select onchange="document.getElementById('sim-model-name').innerText=this.value" class="w-full bg-jarvis-card border border-jarvis-border rounded px-2 py-1 text-slate-200 text-xs">
+                                    <option>gemini-3-flash-preview</option>
+                                    <option>gemini-3.1-flash-image</option>
+                                    <option>gemini-2.5-flash-preview-tts</option>
+                                </select>
+                            </div>
+
+                            <!-- Voice Controls -->
+                            <div class="space-y-2 pt-1 border-t border-jarvis-border/40">
+                                <div class="flex justify-between text-[10px] font-mono">
+                                    <span>Voice Pitch/Style:</span>
+                                    <span class="text-jarvis-purple font-bold">Feminine Warm</span>
+                                </div>
+                                <input type="range" min="1" max="10" value="7" class="w-full accent-jarvis-cyan">
+                                
+                                <div class="flex justify-between text-[10px] font-mono">
+                                    <span>Speech Speed:</span>
+                                    <span class="text-jarvis-cyan font-bold">1.0x</span>
+                                </div>
+                                <input type="range" min="5" max="15" value="10" class="w-full accent-jarvis-purple">
+                            </div>
+
+                            <!-- Permissions Dashboard -->
+                            <div class="bg-jarvis-dark p-2 rounded-xl border border-jarvis-border/60 space-y-1.5 text-[10px]">
+                                <div class="font-bold text-slate-300 mb-1">Active Android Permissions</div>
+                                <div class="flex justify-between text-slate-400"><span>RECORD_AUDIO</span> <span class="text-emerald-400 font-bold">GRANTED</span></div>
+                                <div class="flex justify-between text-slate-400"><span>INTERNET</span> <span class="text-emerald-400 font-bold">GRANTED</span></div>
+                                <div class="flex justify-between text-slate-400"><span>ACCESSIBILITY_SERVICE</span> <span class="text-amber-400 font-bold">OPTIONAL</span></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls & Preset Actions Explorer Panel -->
+            <div class="flex-grow flex flex-col gap-4">
+                
+                <!-- Quick Action Trigger Dashboard -->
+                <div class="glass-panel p-5 rounded-2xl">
+                    <h3 class="font-orbitron font-bold text-sm text-jarvis-cyan mb-3 flex items-center space-x-2">
+                        <i class="fa-solid fa-bolt"></i> <span>Interactive Phone Capability Triggers</span>
+                    </h3>
+                    <p class="text-xs text-slate-400 mb-4">Click any action below to test how YESMIN processes natural Hindi/English commands and triggers native Android Intents & API tools.</p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
+                        <button onclick="triggerPresetCommand('youtube')" class="p-3 bg-jarvis-card hover:bg-jarvis-card/80 border border-jarvis-border hover:border-jarvis-cyan rounded-xl text-left transition flex items-start space-x-3">
+                            <i class="fa-brands fa-youtube text-red-500 text-xl mt-0.5"></i>
+                            <div>
+                                <div class="text-xs font-bold text-white">Play Song on YouTube</div>
+                                <div class="text-[10px] text-slate-400">"YESMIN, play Arijit Singh songs on YouTube"</div>
+                            </div>
+                        </button>
+
+                        <button onclick="triggerPresetCommand('openapp')" class="p-3 bg-jarvis-card hover:bg-jarvis-card/80 border border-jarvis-border hover:border-jarvis-cyan rounded-xl text-left transition flex items-start space-x-3">
+                            <i class="fa-solid fa-[#00F0FF] fa-compass text-jarvis-cyan text-xl mt-0.5"></i>
+                            <div>
+                                <div class="text-xs font-bold text-white">Open Device App</div>
+                                <div class="text-[10px] text-slate-400">"YESMIN, open Chrome camera and settings"</div>
+                            </div>
+                        </button>
+
+                        <button onclick="triggerPresetCommand('alarm')" class="p-3 bg-jarvis-card hover:bg-jarvis-card/80 border border-jarvis-border hover:border-jarvis-cyan rounded-xl text-left transition flex items-start space-x-3">
+                            <i class="fa-solid fa-clock text-amber-400 text-xl mt-0.5"></i>
+                            <div>
+                                <div class="text-xs font-bold text-white">Set Alarm / Reminder</div>
+                                <div class="text-[10px] text-slate-400">"Set an alarm for 7:00 AM tomorrow"</div>
+                            </div>
+                        </button>
+
+                        <button onclick="triggerPresetCommand('coding')" class="p-3 bg-jarvis-card hover:bg-jarvis-card/80 border border-jarvis-border hover:border-jarvis-purple rounded-xl text-left transition flex items-start space-x-3">
+                            <i class="fa-solid fa-code text-jarvis-purple text-xl mt-0.5"></i>
+                            <div>
+                                <div class="text-xs font-bold text-white">Kotlin Code Generator</div>
+                                <div class="text-[10px] text-slate-400">"Write a Kotlin function to launch app"</div>
+                            </div>
+                        </button>
+
+                        <button onclick="triggerPresetCommand('hinglish')" class="p-3 bg-jarvis-card hover:bg-jarvis-card/80 border border-jarvis-border hover:border-jarvis-pink rounded-xl text-left transition flex items-start space-x-3">
+                            <i class="fa-solid fa-comments text-jarvis-pink text-xl mt-0.5"></i>
+                            <div>
+                                <div class="text-xs font-bold text-white">Hinglish Casual Chat</div>
+                                <div class="text-[10px] text-slate-400">"YESMIN, tum kaisi ho? Aaj ka plan kya hai?"</div>
+                            </div>
+                        </button>
+
+                        <button onclick="triggerPresetCommand('sysinfo')" class="p-3 bg-jarvis-card hover:bg-jarvis-card/80 border border-jarvis-border hover:border-emerald-400 rounded-xl text-left transition flex items-start space-x-3">
+                            <i class="fa-solid fa-battery-full text-emerald-400 text-xl mt-0.5"></i>
+                            <div>
+                                <div class="text-xs font-bold text-white">Battery & Status</div>
+                                <div class="text-[10px] text-slate-400">"Check battery status and time"</div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Intent & API Execution Logs Visualizer -->
+                <div class="glass-panel p-5 rounded-2xl flex-grow flex flex-col">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="font-orbitron font-bold text-sm text-jarvis-purple flex items-center space-x-2">
+                            <i class="fa-solid fa-terminal"></i> <span>Android Runtime & Action Log Monitor</span>
+                        </h3>
+                        <span class="text-[10px] font-mono text-slate-400">Package: <span class="text-jarvis-cyan">com.yesmin.ai</span></span>
+                    </div>
+
+                    <div id="sim-runtime-logs" class="flex-grow bg-jarvis-dark border border-jarvis-border/80 rounded-xl p-3 font-mono text-xs text-slate-300 overflow-y-auto space-y-1.5 min-h-[180px]">
+                        <div class="text-slate-500">[SYSTEM] Initialization completed. Ready for intent dispatch.</div>
+                        <div class="text-slate-500">[TTS_ENGINE] TextToSpeech initialized with locale: hi_IN & en_US.</div>
+                        <div class="text-slate-500">[GEMINI_API] Endpoint ready: gemini-3-flash-preview.</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TAB 2: ANDROID STUDIO PROJECT FILE EXPLORER -->
+        <section id="view-explorer" class="tab-view hidden flex-grow flex flex-col lg:flex-row gap-6">
+            
+            <!-- Directory File Tree Sidebar -->
+            <div class="w-full lg:w-72 bg-jarvis-card border border-jarvis-border rounded-2xl p-4 flex-shrink-0">
+                <div class="flex items-center justify-between mb-3 border-b border-jarvis-border/60 pb-2">
+                    <span class="font-orbitron text-xs font-bold text-jarvis-cyan"><i class="fa-solid fa-folder-open"></i> Project Files</span>
+                    <span class="text-[10px] font-mono text-slate-500">Kotlin Gradle</span>
+                </div>
+
+                <div class="space-y-1 font-mono text-xs" id="file-tree-container">
+                    <!-- Dynamic File Tree Rendered Here -->
+                </div>
+            </div>
+
+            <!-- Code Editor Display Panel -->
+            <div class="flex-grow bg-jarvis-card border border-jarvis-border rounded-2xl p-5 flex flex-col overflow-hidden">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 border-b border-jarvis-border/60 pb-3">
+                    <div class="flex items-center space-x-2">
+                        <i id="code-file-icon" class="fa-solid fa-file-code text-jarvis-cyan"></i>
+                        <span id="code-file-title" class="font-mono text-sm font-bold text-white">MainActivity.kt</span>
+                        <span id="code-file-path" class="text-[11px] font-mono text-slate-400">app/src/main/java/com/yesmin/ai/MainActivity.kt</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="copyCurrentCode()" class="px-3 py-1.5 bg-jarvis-dark hover:bg-slate-800 border border-jarvis-border text-xs rounded-lg text-slate-300 font-mono transition flex items-center space-x-1">
+                            <i class="fa-regular fa-copy"></i> <span>Copy Code</span>
+                        </button>
+                        <button onclick="downloadCurrentCode()" class="px-3 py-1.5 bg-jarvis-cyan text-black hover:bg-cyan-300 text-xs rounded-lg font-bold font-mono transition flex items-center space-x-1">
+                            <i class="fa-solid fa-download"></i> <span>Save File</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Source Code Viewer -->
+                <div class="flex-grow bg-jarvis-dark border border-jarvis-border/60 rounded-xl p-4 overflow-auto">
+                    <pre><code id="code-content-display" class="font-mono text-xs text-slate-300 leading-relaxed whitespace-pre"></code></pre>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- TAB 3: ANDROID ARCHITECTURE DIAGRAM -->
+        <section id="view-architecture" class="tab-view hidden flex-grow flex flex-col gap-6">
+            <div class="glass-panel p-6 rounded-2xl space-y-6">
+                <div>
+                    <h2 class="font-orbitron font-bold text-lg text-jarvis-cyan mb-1 flex items-center space-x-2">
+                        <i class="fa-solid fa-sitemap"></i> <span>YESMIN AI — Full Stack Android MVVM Architecture</span>
+                    </h2>
+                    <p class="text-xs text-slate-400">Clean architecture implementation using Jetpack Compose, Gemini REST API, Android Intents, and Speech Recognition.</p>
+                </div>
+
+                <!-- Architectural Nodes Flow -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    
+                    <!-- Layer 1: UI Layer -->
+                    <div class="bg-jarvis-card border border-jarvis-cyan/30 rounded-xl p-4 space-y-3">
+                        <div class="flex items-center space-x-2 border-b border-jarvis-cyan/20 pb-2">
+                            <i class="fa-solid fa-desktop text-jarvis-cyan"></i>
+                            <span class="font-orbitron text-xs font-bold text-jarvis-cyan">1. Presentation Layer</span>
+                        </div>
+                        <ul class="text-xs font-mono space-y-1 text-slate-300">
+                            <li class="p-1.5 bg-jarvis-dark rounded border border-jarvis-border">MainActivity.kt</li>
+                            <li class="p-1.5 bg-jarvis-dark rounded border border-jarvis-border">FuturisticCoreOrb.kt</li>
+                            <li class="p-1.5 bg-jarvis-dark rounded border border-jarvis-border">CodeAssistantScreen.kt</li>
+                            <li class="p-1.5 bg-jarvis-dark rounded border border-jarvis-border">SettingsScreen.kt</li>
+                        </ul>
+                    </div>
+
+                    <!-- Layer 2: ViewModels & State -->
+                    <div class="bg-jarvis-card border border-jarvis-purple/30 rounded-xl p-4 space-y-3">
+                        <div class="flex items-center space-x-2 border-b border-jarvis-purple/20 pb-2">
+                            <i class="fa-solid fa-gears text-jarvis-purple"></i>
+                            <span class="font-orbitron text-xs font-bold text-jarvis-purple">2. ViewModel Layer</span>
+                        </div>
+                        <ul class="text-xs font-mono space-y-1 text-slate-300">
+                            <li class="p-1.5 bg-jarvis-dark rounded border border-jarvis-border">MainViewModel.kt</li>
+                            <li class="p-1.5 bg-jarvis-dark rounded border border-jarvis-border">StateFlow & SharedFlow</li>
+                            <li class="p-1.5 bg-jarvis-dark rounded border border-jarvis-border">SpeechState Management</li>
+                        </ul>
+                    </div>
+
+                    <!-- Layer 3: Action Router & Tools -->
+                    <div class="bg-jarvis-card border border-jarvis-pink/30 rounded-xl p-4 space-y-3">
+                        <div class="flex items-center space-x-2 border-b border-jarvis-pink/20 pb-2">
+                            <i class="fa-solid fa-route text-jarvis-pink"></i>
+                            <span class="font-orbitron text-xs font-bold text-jarvis-pink">3. Action Router</span>
+                        </div>
+                        <ul class="text-xs font-mono space-y-1 text-slate-300">
+                            <li class="p-1.5 bg-jarvis-dark rounded border border-jarvis-border">ActionRouter.kt</li>
+                            <li class="p-1.5 bg-jarvis-dark rounded border border-jarvis-border">Intent Dispatcher</li>
+                            <li class="p-1.5 bg-jarvis-dark rounded border border-jarvis-border">YouTube Search Launcher</li>
+                            <li class="p-1.5 bg-jarvis-dark rounded border border-jarvis-border">App Launcher System</li>
+                        </ul>
+                    </div>
+
+                    <!-- Layer 4: AI Brain & Hardware -->
+                    <div class="bg-jarvis-card border border-emerald-400/30 rounded-xl p-4 space-y-3">
+                        <div class="flex items-center space-x-2 border-b border-emerald-400/20 pb-2">
+                            <i class="fa-solid fa-brain text-emerald-400"></i>
+                            <span class="font-orbitron text-xs font-bold text-emerald-400">4. Hardware & API</span>
+                        </div>
+                        <ul class="text-xs font-mono space-y-1 text-slate-300">
+                            <li class="p-1.5 bg-jarvis-dark rounded border border-jarvis-border">GeminiApiService.kt</li>
+                            <li class="p-1.5 bg-jarvis-dark rounded border border-jarvis-border">Android SpeechRecognizer</li>
+                            <li class="p-1.5 bg-jarvis-dark rounded border border-jarvis-border">TextToSpeech Engine</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <!-- Setup & Compilation Instructions -->
+                <div class="bg-jarvis-dark border border-jarvis-border rounded-xl p-5 space-y-3">
+                    <h3 class="font-orbitron text-sm font-bold text-white flex items-center space-x-2">
+                        <i class="fa-solid fa-hammer text-jarvis-cyan"></i> <span>Android Studio Build & Setup Instructions</span>
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono text-slate-300">
+                        <div class="space-y-1.5">
+                            <div class="text-jarvis-cyan font-bold">1. Prerequisites:</div>
+                            <p>• Android Studio Ladybug (2024.2.1+) or newer</p>
+                            <p>• JDK 17 & Kotlin 2.0.0+</p>
+                            <p>• Min SDK: 24 (Android 7.0), Target SDK: 35 (Android 15)</p>
+                        </div>
+                        <div class="space-y-1.5">
+                            <div class="text-jarvis-purple font-bold">2. Termux / Gradle Build Command:</div>
+                            <div class="bg-black p-2 rounded border border-jarvis-border text-emerald-400">
+                                ./gradlew assembleDebug
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Project Files Data & JavaScript Implementation -->
+    <script>
+        // PROJECT SOURCE FILES DATABASE
+        const projectFiles = {
+            "build.gradle.kts (App)": {
+                path: "app/build.gradle.kts",
+                icon: "fa-brands fa-gradle text-cyan-400",
+                code: `plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
+}
+
+android {
+    namespace = "com.yesmin.ai"
+    compileSdk = 35
+
+    defaultConfig {
+        applicationId = "com.yesmin.ai"
+        minSdk = 24
+        targetSdk = 35
+        versionCode = 1
+        versionName = "1.0.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+    buildFeatures {
+        compose = true
+    }
+}
+
+dependencies {
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
+
+    // Retrofit & OkHttp for Gemini REST API
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
+    // Coroutines & Lifecycle
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
+}`
+            },
+            "settings.gradle.kts": {
+                path: "settings.gradle.kts",
+                icon: "fa-brands fa-gradle text-purple-400",
+                code: `pluginManagement {
+    repositories {
+        google {
+            content {
+                includeGroupByRegex("com\\\\.android.*")
+                includeGroupByRegex("com\\\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.name = "YESMIN AI"
+include(":app")`
+            },
+            "AndroidManifest.xml": {
+                path: "app/src/main/AndroidManifest.xml",
+                icon: "fa-solid fa-code text-pink-400",
+                code: `<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Permissions Required by YESMIN AI -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" 
+        tools:ignore="QueryAllPackagesPermission" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="YESMIN AI"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.YESMINAI">
+        
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.YESMINAI">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+    </application>
+
+</manifest>`
+            },
+            "MainActivity.kt": {
+                path: "app/src/main/java/com/yesmin/ai/MainActivity.kt",
+                icon: "fa-solid fa-file-code text-cyan-400",
+                code: `package com.yesmin.ai
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.ui.Modifier
+import com.yesmin.ai.ui.theme.YESMINAITheme
+
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            YESMINAITheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    // YESMIN AI Main Composite View
+                    FuturisticHomeScreen()
+                }
+            }
+        }
+    }
+}`
+            },
+            "FuturisticCoreOrb.kt": {
+                path: "app/src/main/java/com/yesmin/ai/ui/components/FuturisticCoreOrb.kt",
+                icon: "fa-solid fa-atom text-purple-400",
+                code: `package com.yesmin.ai.ui.components
+
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.size
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.unit.dp
+
+enum class OrbState { IDLE, LISTENING, THINKING, SPEAKING, ERROR }
+
+@Composable
+fun FuturisticCoreOrb(
+    state: OrbState,
+    modifier: Modifier = Modifier
+) {
+    val infiniteTransition = rememberInfiniteTransition(label = "orb_anim")
+    
+    val rotation by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 360f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(4000, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+        ), label = "rotation"
+    )
+
+    val scale by infiniteTransition.animateFloat(
+        initialValue = 0.95f,
+        targetValue = 1.05f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(1200, easing = FastOutSlowInEasing),
+            repeatMode = RepeatMode.Reverse
+        ), label = "pulse"
+    )
+
+    val coreColor = when(state) {
+        OrbState.IDLE -> Color(0F00F0FF) // Cyan
+        OrbState.LISTENING -> Color(0FEC4899) // Pink Glow
+        OrbState.THINKING -> Color(0FA855F7) // Purple Pulse
+        OrbState.SPEAKING -> Color(0F10B981) // Emerald Wave
+        OrbState.ERROR -> Color(0FEF4444) // Red Error
+    }
+
+    Canvas(modifier = modifier.size(220.dp)) {
+        val center = Offset(size.width / 2, size.height / 2)
+        val radius = (size.minDimension / 2.5f) * scale
+
+        // Outer Glow Rings
+        drawCircle(
+            brush = Brush.radialGradient(
+                colors = listOf(coreColor.copy(alpha = 0.4f), Color.Transparent),
+                center = center,
+                radius = radius * 1.4f
+            ),
+            radius = radius * 1.3f
+        )
+
+        // Animated Outer Tech Ring
+        drawArc(
+            color = coreColor,
+            startAngle = rotation,
+            sweepAngle = 240f,
+            useCenter = false,
+            style = Stroke(width = 4f),
+            size = size
+        )
+
+        // Core Glowing Sphere
+        drawCircle(
+            brush = Brush.radialGradient(
+                colors = listOf(Color.White, coreColor, Color.Black),
+                center = center,
+                radius = radius
+            ),
+            radius = radius
+        )
+    }
+}`
+            },
+            "GeminiApiService.kt": {
+                path: "app/src/main/java/com/yesmin/ai/data/GeminiApiService.kt",
+                icon: "fa-solid fa-cloud text-emerald-400",
+                code: `package com.yesmin.ai.data
+
+import retrofit2.http.Body
+import retrofit2.http.POST
+import retrofit2.http.Query
+
+data class GeminiRequest(
+    val contents: List<Content>,
+    val systemInstruction: SystemInstruction? = null
+)
+
+data class Content(val parts: List<Part>, val role: String = "user")
+data class Part(val text: String)
+data class SystemInstruction(val parts: List<Part>)
+
+data class GeminiResponse(
+    val candidates: List<Candidate>?
+)
+data class Candidate(val content: Content?)
+
+interface GeminiApiService {
+    @POST("v1beta/models/gemini-3-flash-preview:generateContent")
+    suspend fun generateContent(
+        @Query("key") apiKey: String,
+        @Body request: GeminiRequest
+    ): GeminiResponse
+}`
+            },
+            "ActionRouter.kt": {
+                path: "app/src/main/java/com/yesmin/ai/actions/ActionRouter.kt",
+                icon: "fa-solid fa-route text-amber-400",
+                code: `package com.yesmin.ai.actions
+
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.provider.AlarmClock
+
+class ActionRouter(private val context: Context) {
+
+    fun executeCommand(userText: String): String {
+        val lower = userText.lowercase()
+
+        return when {
+            lower.contains("youtube") -> {
+                val query = lower.replace("play", "").replace("on youtube", "").trim()
+                launchYouTubeSearch(query)
+                "Opening YouTube for: $query"
+            }
+            lower.contains("alarm") || lower.contains("set alarm") -> {
+                setQuickAlarm("YESMIN Reminder", 7, 0)
+                "Setting alarm for 7:00 AM."
+            }
+            lower.contains("open chrome") -> {
+                launchApp("com.android.chrome")
+                "Opening Google Chrome."
+            }
+            else -> "NO_DIRECT_ACTION"
+        }
+    }
+
+    private fun launchYouTubeSearch(query: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/results?search_query=$query"))
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivity(intent)
+    }
+
+    private fun launchApp(packageName: String) {
+        val intent = context.packageManager.getLaunchIntentForPackage(packageName)
+        intent?.let {
+            it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            context.startActivity(it)
+        }
+    }
+
+    private fun setQuickAlarm(message: String, hour: Int, minutes: Int) {
+        val intent = Intent(AlarmClock.ACTION_SET_ALARM).apply {
+            putExtra(AlarmClock.EXTRA_MESSAGE, message)
+            putExtra(AlarmClock.EXTRA_HOUR, hour)
+            putExtra(AlarmClock.EXTRA_MINUTES, minutes)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        context.startActivity(intent)
+    }
+}`
+            },
+            "README.md": {
+                path: "README.md",
+                icon: "fa-solid fa-book text-slate-400",
+                code: `# YESMIN AI — Futuristic Personal AI Assistant
+
+YESMIN AI is a JARVIS-inspired, high-performance Android AI companion built natively with **Kotlin**, **Jetpack Compose**, and **Google Gemini API**.
+
+## 🌟 Key Features
+- **Feminine Warm Conversational Personality:** Natural Hinglish & English responses.
+- **Futuristic Animated AI Core:** Real-time state-reactive visualizer canvas.
+- **Intent Router Tool System:** Native app launcher, YouTube player, and alarm trigger.
+- **Android Code Assistant Workspace:** Syntax highlighted editor and Kotlin snippet tool.
+
+## 🚀 Quick Setup & Build
+
+1. Clone or download the repository files.
+2. Open the project folder in **Android Studio Ladybug (2024.2.1+)**.
+3. Allow Gradle synchronization to resolve dependencies.
+4. Supply your Gemini API Key in the Settings Screen.
+5. Build and run on an Android device (API 24+).`
+            }
+        };
+
+        let currentActiveFile = "MainActivity.kt";
+
+        // TAB SWITCHING LOGIC
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('bg-gradient-to-r', 'from-jarvis-cyan/20', 'to-jarvis-violet/20', 'text-jarvis-cyan', 'border', 'border-jarvis-cyan/40');
+                el.classList.add('text-slate-400');
+            });
+
+            document.getElementById(`view-${tabName}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tabName}`);
+            activeBtn.classList.remove('text-slate-400');
+            activeBtn.classList.add('bg-gradient-to-r', 'from-jarvis-cyan/20', 'to-jarvis-violet/20', 'text-jarvis-cyan', 'border', 'border-jarvis-cyan/40');
+        }
+
+        // PHONE SIMULATOR APP TAB SWITCHING
+        function setPhoneAppTab(screenName) {
+            document.querySelectorAll('.app-screen').forEach(s => s.classList.add('hidden'));
+            document.getElementById(`sim-app-${screenName}`).classList.remove('hidden');
+
+            document.querySelectorAll('#p-tab-home, #p-tab-coder, #p-tab-settings').forEach(btn => {
+                btn.className = "px-2 py-1 rounded text-slate-400 hover:text-white";
+            });
+            document.getElementById(`p-tab-${screenName}`).className = "px-2 py-1 rounded bg-jarvis-violet/30 text-jarvis-cyan border border-jarvis-cyan/30";
+        }
+
+        // INITIALIZE FILE TREE & CODE VIEWER
+        function initFileExplorer() {
+            const container = document.getElementById('file-tree-container');
+            container.innerHTML = '';
+
+            Object.keys(projectFiles).forEach(fileName => {
+                const file = projectFiles[fileName];
+                const btn = document.createElement('button');
+                btn.className = `w-full text-left px-2 py-1.5 rounded flex items-center space-x-2 hover:bg-jarvis-dark/80 transition ${fileName === currentActiveFile ? 'bg-jarvis-cyan/10 text-jarvis-cyan border border-jarvis-cyan/30' : 'text-slate-300'}`;
+                btn.onclick = () => loadFileCode(fileName);
+                btn.innerHTML = `<i class="${file.icon}"></i><span class="truncate">${fileName}</span>`;
+                container.appendChild(btn);
+            });
+
+            loadFileCode(currentActiveFile);
+        }
+
+        function loadFileCode(fileName) {
+            currentActiveFile = fileName;
+            const file = projectFiles[fileName];
+            document.getElementById('code-file-title').innerText = fileName;
+            document.getElementById('code-file-path').innerText = file.path;
+            document.getElementById('code-content-display').innerText = file.code;
+            initFileExplorer();
+        }
+
+        function copyCurrentCode() {
+            const code = projectFiles[currentActiveFile].code;
+            navigator.clipboard.writeText(code);
+            alert(`Copied ${currentActiveFile} to clipboard!`);
+        }
+
+        function downloadCurrentCode() {
+            const file = projectFiles[currentActiveFile];
+            const blob = new Blob([file.code], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = currentActiveFile.split(' ')[0];
+            a.click();
+        }
+
+        // CORE ORB CANVAS ANIMATION SIMULATOR
+        let orbCanvas, orbCtx;
+        let orbAngle = 0;
+        let currentSimState = 'IDLE'; // IDLE, LISTENING, THINKING, SPEAKING
+
+        function initOrbCanvas() {
+            orbCanvas = document.getElementById('orbCanvas');
+            if (!orbCanvas) return;
+            orbCtx = orbCanvas.getContext('2d');
+            requestAnimationFrame(renderOrbFrame);
+        }
+
+        function renderOrbFrame() {
+            orbCtx.clearRect(0, 0, orbCanvas.width, orbCanvas.height);
+            const cx = orbCanvas.width / 2;
+            const cy = orbCanvas.height / 2;
+            
+            orbAngle += 0.03;
+
+            let colorHex = '#00F0FF';
+            if (currentSimState === 'LISTENING') colorHex = '#EC4899';
+            if (currentSimState === 'THINKING') colorHex = '#A855F7';
+            if (currentSimState === 'SPEAKING') colorHex = '#10B981';
+
+            // Outer Orbit Wave Ring
+            orbCtx.save();
+            orbCtx.translate(cx, cy);
+            orbCtx.rotate(orbAngle);
+            orbCtx.beginPath();
+            orbCtx.arc(0, 0, 75, 0, Math.PI * 1.5);
+            orbCtx.strokeStyle = colorHex;
+            orbCtx.lineWidth = 3;
+            orbCtx.shadowBlur = 15;
+            orbCtx.shadowColor = colorHex;
+            orbCtx.stroke();
+            orbCtx.restore();
+
+            // Inner Pulsing Core
+            const pulse = Math.sin(orbAngle * 2) * 6;
+            const gradient = orbCtx.createRadialGradient(cx, cy, 5, cx, cy, 55 + pulse);
+            gradient.addColorStop(0, '#FFFFFF');
+            gradient.addColorStop(0.5, colorHex);
+            gradient.addColorStop(1, '#050711');
+
+            orbCtx.beginPath();
+            orbCtx.arc(cx, cy, 55 + pulse, 0, Math.PI * 2);
+            orbCtx.fillStyle = gradient;
+            orbCtx.shadowBlur = 25;
+            orbCtx.shadowColor = colorHex;
+            orbCtx.fill();
+
+            requestAnimationFrame(renderOrbFrame);
+        }
+
+        function toggleSimVoiceState() {
+            if (currentSimState === 'IDLE') setSimState('LISTENING');
+            else if (currentSimState === 'LISTENING') setSimState('THINKING');
+            else if (currentSimState === 'THINKING') setSimState('SPEAKING');
+            else setSimState('IDLE');
+        }
+
+        function setSimState(newState) {
+            currentSimState = newState;
+            const badge = document.getElementById('sim-state-text');
+            badge.innerText = `STATE: ${newState}`;
+            logSimRuntime(`[STATE_CHANGE] Core Orb transitioned to state: ${newState}`);
+        }
+
+        // CHAT & PRESET COMMAND DISPATCHER SIMULATION
+        function sendSimMessage(customText) {
+            const input = document.getElementById('sim-user-input');
+            const messageText = customText || input.value.trim();
+            if (!messageText) return;
+
+            if (!customText) input.value = '';
+
+            appendChatMessage('USER', messageText);
+            setSimState('THINKING');
+
+            setTimeout(() => {
+                processSimAIResponse(messageText);
+            }, 900);
+        }
+
+        function triggerPresetCommand(type) {
+            setPhoneAppTab('home');
+            if (type === 'youtube') sendSimMessage('YESMIN, play Arijit Singh songs on YouTube');
+            if (type === 'openapp') sendSimMessage('YESMIN, open Chrome browser');
+            if (type === 'alarm') sendSimMessage('Set an alarm for 7:00 AM');
+            if (type === 'coding') sendSimMessage('Write Kotlin code for app launcher');
+            if (type === 'hinglish') sendSimMessage('YESMIN, tum kaisi ho? Aaj ka plan kya hai?');
+            if (type === 'sysinfo') sendSimMessage('Check battery status');
+        }
+
+        function processSimAIResponse(query) {
+            const lower = query.lowercase ? query.lowercase() : query.toLowerCase();
+            let aiText = "I am processing your query with Gemini 3 Flash...";
+
+            if (lower.includes('youtube')) {
+                aiText = "Opening YouTube for Arijit Singh songs now!";
+                logSimRuntime('[ACTION_ROUTER] Triggered Intent: Intent.ACTION_VIEW -> https://youtube.com/results?search_query=Arijit+Singh');
+            } else if (lower.includes('chrome') || lower.includes('open')) {
+                aiText = "Opening Google Chrome application.";
+                logSimRuntime('[ACTION_ROUTER] Launched Package: com.android.chrome via PackageManager');
+            } else if (lower.includes('alarm')) {
+                aiText = "Setting an alarm for 7:00 AM. Good morning in advance!";
+                logSimRuntime('[ACTION_ROUTER] Set Alarm via AlarmClock.ACTION_SET_ALARM (07:00 AM)');
+            } else if (lower.includes('kotlin') || lower.includes('code')) {
+                aiText = "Here is the Kotlin app launcher code snippet in your Coder workspace.";
+                setPhoneAppTab('coder');
+                logSimRuntime('[CODE_ASSISTANT] Generated Kotlin Intent snippet successfully.');
+            } else if (lower.includes('tum') || lower.includes('kaisi')) {
+                aiText = "Main bilkul badhiya hoon! Aap batao, aaj hum kya naya build karenge?";
+            } else if (lower.includes('battery')) {
+                aiText = "Your device battery level is at 88% and fully optimized.";
+                logSimRuntime('[SYSTEM_API] Query BatteryManager: LEVEL 88%');
+            }
+
+            appendChatMessage('YESMIN', aiText);
+            setSimState('SPEAKING');
+
+            // Speak simulated voice using Web Speech API if supported
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(aiText);
+                utterance.pitch = 1.2;
+                utterance.rate = 1.0;
+                utterance.onend = () => setSimState('IDLE');
+                window.speechSynthesis.speak(utterance);
+            } else {
+                setTimeout(() => setSimState('IDLE'), 2000);
+            }
+        }
+
+        function appendChatMessage(sender, text) {
+            const box = document.getElementById('sim-chat-box');
+            const isUser = sender === 'USER';
+            
+            const div = document.createElement('div');
+            div.className = `flex flex-col ${isUser ? 'items-end' : 'items-start'} max-w-[85%] ${isUser ? 'ml-auto' : 'mr-auto'}`;
+            div.innerHTML = `
+                <span class="text-[9px] ${isUser ? 'text-jarvis-purple' : 'text-jarvis-cyan'} font-mono mb-0.5">${sender}</span>
+                <div class="${isUser ? 'bg-jarvis-violet/30 border border-jarvis-purple/40 text-white rounded-tr-none' : 'bg-jarvis-card border border-jarvis-cyan/30 text-slate-200 rounded-tl-none'} p-2.5 rounded-2xl leading-relaxed">
+                    ${text}
+                </div>
+            `;
+            box.appendChild(div);
+            box.scrollTop = box.scrollHeight;
+        }
+
+        function logSimRuntime(logMsg) {
+            const logsBox = document.getElementById('sim-runtime-logs');
+            const entry = document.createElement('div');
+            entry.className = logMsg.includes('ACTION_ROUTER') ? 'text-jarvis-cyan font-bold' : 'text-slate-400';
+            entry.innerText = `[${new Date().toLocaleTimeString()}] ${logMsg}`;
+            logsBox.appendChild(entry);
+            logsBox.scrollTop = logsBox.scrollHeight;
+        }
+
+        function toggleSimMic() {
+            if (currentSimState === 'LISTENING') {
+                setSimState('IDLE');
+            } else {
+                setSimState('LISTENING');
+                logSimRuntime('[SPEECH_RECOGNIZER] Android SpeechRecognizer started listening...');
+                setTimeout(() => {
+                    sendSimMessage("YESMIN, play romantic songs on YouTube");
+                }, 2500);
+            }
+        }
+
+        function simulateCodeAction(type) {
+            if (type === 'debug') {
+                logSimRuntime('[CODE_ASSISTANT] Verified Kotlin code: 0 errors, syntax valid.');
+                alert('Code status: Valid Kotlin 2.0 Syntax');
+            } else {
+                logSimRuntime('[CODE_ASSISTANT] Generated line-by-line code explanation.');
+                alert('Explanation: This function retrieves the launch intent for a package and starts the activity if found.');
+            }
+        }
+
+        // WINDOW LOAD INITIALIZATION
+        window.onload = function() {
+            initFileExplorer();
+            initOrbCanvas();
+        };
+    </script>
+</body>
+</html>
